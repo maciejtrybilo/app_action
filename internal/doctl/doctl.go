@@ -32,7 +32,7 @@ func (d *Client) ListDeployments(appID string) ([]godo.Deployment, error) {
 	cmd := exec.Command("sh", "-c", fmt.Sprintf("doctl apps list-deployments %s -ojson", appID))
 	spec, err := cmd.Output()
 	if err != nil {
-		fmt.Printf("error: %s", err)
+		fmt.Printf("error....", err, spec)
 		return nil, errors.Wrap(err, "error in retrieving list of deployments")
 	}
 
