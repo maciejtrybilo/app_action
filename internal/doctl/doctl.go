@@ -32,6 +32,7 @@ func (d *Client) ListDeployments(appID string) ([]godo.Deployment, error) {
 	cmd := exec.Command("sh", "-c", fmt.Sprintf("doctl apps list-deployments %s -ojson", appID))
 	spec, err := cmd.Output()
 	if err != nil {
+		fmt.Printf("error: %s", err)
 		return nil, errors.Wrap(err, "error in retrieving list of deployments")
 	}
 
@@ -137,7 +138,7 @@ func (d *Client) RetrieveAppID(appName string) (string, error) {
 // IsDeployed takes app id as an input and checks for the status of the deployment until the status is updated to ACTIVE or failed
 func (d *Client) IsDeployed(appID string) error {
 	done := false
-	fmt.Println("App Platform is Building ....")
+	fmt.Println("App Platform is Building for app %s ....", appID)
 	for !done {
 		app, err := d.ListDeployments(appID)
 		if err != nil {
